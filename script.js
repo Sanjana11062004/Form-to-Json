@@ -10,7 +10,9 @@
             });
 
             var formDataJSON = JSON.stringify(formObject);
+            //const formDataObj = Object.fromEntries(formData.entries());
             console.log(formDataJSON);
+            
         });
     });
 
