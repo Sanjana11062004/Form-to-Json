@@ -1,34 +1,66 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useState } from 'react';
 
-function Form(){
-    const { register, handleSubmit } = useForm();
-    const onSubmit = data => {
-        // console.log the data to see the input values
-                console.log(data);
-            };
-    return(
-        <>
-        <div>
-            <form id="form">
-        <div className="form-control">
-            <label >Full Name</label>
-            <input {...register("name", { required: true })} id="name" name="name" type="text"  />
-        </div>
-        <div className="form-control">
-            <label >Email Address</label>
-            <input {...register("email", { required: true })} id="email" name="email" type="email" />
-        </div>
-        <div className="form-control">
-            <label >Enter a Message</label>
-            <textarea {...register("message", { required: true })} id="message" name="message" rows="6" cols="65" ></textarea>
-        </div>
-        <button className="btn" type="submit">Send</button>
+function MyForm() {
+    const informData={
+        firstName: '',
+    lastName: '',
+    email: '',
+    }
+  const [formData, setFormData] = useState(informData);
+
+  const handleInputChange = (event) => {
+    // Update the corresponding form data field when input changes
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Convert form data to JSON format
+    const jsonData = JSON.stringify(formData);
+    console.log(jsonData);
+    // You can now send the JSON data to your server or use it as needed
+    setFormData(informData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        First Name:
+        <input
+          type="text"
+          name="firstName"
+          value={formData.firstName}
+          onChange={handleInputChange}
+        />
+      </label>
+      <br />
+      <label>
+        Last Name:
+        <input
+          type="text"
+          name="lastName"
+          value={formData.lastName}
+          onChange={handleInputChange}
+        />
+      </label>
+      <br />
+      <label>
+        Email:
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
+        />
+      </label>
+      <br />
+      <button type="submit">Submit</button>
     </form>
-    <script src="./script.js"></script>
-        </div>
-        </>
-    )
+  );
 }
 
-export default Form;
+export default MyForm;
